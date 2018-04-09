@@ -2,13 +2,9 @@
 title: API Reference
 
 language_tabs: # must be one of https://git.io/vQNgJ
-  - shell
-  - ruby
-  - python
-  - javascript
+  - http
 
 toc_footers:
-  - <a href='#'>Sign Up for a Developer Key</a>
   - <a href='https://github.com/lord/slate'>Documentation Powered by Slate</a>
 
 includes:
@@ -28,50 +24,56 @@ The APIs are hosted on different environments as listed below:
 
 Each environment also provides a Swagger page by attaching `swagger/ui/index` to the URL.
 
+Email `itdevapp@pennfoster.edu` to request a Developer Key.
+
+## API Endpoints
+* All API access is over HTTPS.
+* All boolean values should passed as true/false.
+* POST and PUT requests, parameters can be sent using standard [HTML form encoding](https://www.w3.org/TR/html4/interact/forms.html#h-17.13.4).
+* Optionally, POST and PUT requests may be sent in [JSON format](http://www.json.org/). The content-type of the request must be set to application/json in this case.
+
+
 # Authentication
 
-> To authorize, use this code:
-
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-```
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-```
-
-```shell
-# With shell, you can just pass the correct header with each request
-curl "api_endpoint_here"
-  -H "Authorization: meowmeowmeow"
-```
+> Example OAuth Request:
 
 ```javascript
-const kittn = require('kittn');
+POST https://environment-url/oauth/token
 
-let api = kittn.authorize('meowmeowmeow');
+// Request Headers
+Authorization: AuthString
+
+// Request Body
+grant_type=client_credentials&api_key={auth_key}
 ```
 
-> Make sure to replace `meowmeowmeow` with your API key.
+>Response (JSON)
 
-Penn Foster uses the [OAuth 2.0](https://tools.ietf.org/html/rfc6749) authentication/authorization mechanism. Before making any requests, PF will provide you with the following parameters for each environment: test, staging, and production. 
+```json
 
-Parameter | Description
---------- | -----------
-ID | The ID of the kitten to delete
+{
+  "access_token": "<access_token>",
+  "token_type": "bearer",
+  "expires_in": "<expiration_secs>"
+}
+```
 
-Kittn uses API keys to allow access to the API. You can register a new Kittn API key at our [developer portal](http://example.com/developers).
+Penn Foster uses the [OAuth 2.0](https://tools.ietf.org/html/rfc6749) authentication/authorization mechanism. Before making any requests, PF will provide you with the following parameters for each environment: test, staging, and production.
 
-Kittn expects for the API key to be included in all API requests to the server in a header that looks like the following:
+Parameter | Description | Required
+--------- | ----------- | --------
+grant_type | client_credentials | Yes
+client_id | The client_id for your registered application and environment | Yes
+client_secret | The client_secret for your registered application and environment | Yes
+api_key | The api_key for your registered application and environment | Yes
+auth_key | For convenience the auth_key is a base64 encoded client_id:client_secret | No
 
-`Authorization: meowmeowmeow`
+PF expects for the API token to be included in all API requests to the server in a header that looks like the following:
+
+`Authorization: Bearer secretToken`
 
 <aside class="notice">
-You must replace <code>meowmeowmeow</code> with your personal API key.
+You must replace <code>secretToken</code> with the token received from the authentication call.
 </aside>
 
 # Kittens
