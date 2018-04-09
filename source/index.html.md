@@ -41,10 +41,10 @@ Email `itdevapp@pennfoster.edu` to request a Developer Key.
 POST https://environment-url/oauth/token
 
 // Request Headers
-Authorization: AuthString
+Authorization: AuthKey
 
 // Request Body
-grant_type=client_credentials&api_key={auth_key}
+grant_type=client_credentials&api_key={api_key}
 ```
 
 >Response (JSON)
@@ -68,7 +68,7 @@ client_secret | The client_secret for your registered application and environmen
 api_key | The api_key for your registered application and environment | Yes
 auth_key | For convenience the auth_key is a base64 encoded client_id:client_secret | No
 
-PF expects for the API token to be included in all API requests to the server in a header that looks like the following:
+Penn Foster expects for the API token to be included in all API requests to the server in a header that looks like the following:
 
 `Authorization: Bearer secretToken`
 
