@@ -41,7 +41,7 @@ Email `itdevapp@pennfoster.edu` to request a Developer Key.
 POST https://environment-url/oauth/token
 
 // Request Headers
-Authorization: AuthKey
+Authorization: {auth_key}
 
 // Request Body
 grant_type=client_credentials&api_key={api_key}
