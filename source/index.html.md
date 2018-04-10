@@ -76,6 +76,279 @@ Penn Foster expects for the API token to be included in all API requests to the 
 You must replace <code>secretToken</code> with the token received from the authentication call.
 </aside>
 
+# Accounts
+
+At Penn Foster all API calls will require your Account ID.  This ID will be supplied by the Penn Foster team.
+Accounts are in a 3 tier hierarchy:
+
+1. Account ID (also referred to as Parent ID)
+2. Location ID
+3. Client ID
+
+Each Account ID can have 1 or many Location IDs.
+Each Location ID can have 1 or many Client IDs.
+
+## Get All Accounts
+
+> Example Get All Accounts Request:
+
+```javascript
+GET https://environment-url/api/v1/accounts/<account_id>
+
+// Request Headers
+Authorization: Bearer <token>
+Content-type: application/json
+```
+>Response (JSON)
+
+```json
+
+{
+  "parent_id": 0,
+  "type": "string",
+  "name": "string",
+  "status": "string",
+  "address": {
+    "address_1": "string",
+    "address_2": "string",
+    "address_3": "string",
+    "address_4": "string",
+    "city": "string",
+    "state": "string",
+    "postal_code": "string",
+    "country": "string"
+  },
+  "locations": [
+    {
+      "parent_id": 0,
+      "location_id": 0,
+      "type": "string",
+      "name": "string",
+      "status": "string",
+      "address": {
+        "address_1": "string",
+        "address_2": "string",
+        "address_3": "string",
+        "address_4": "string",
+        "city": "string",
+        "state": "string",
+        "postal_code": "string",
+        "country": "string"
+      },
+      "clients": [
+        {
+          "parent_id": 0,
+          "location_id": 0,
+          "client_id": 0,
+          "type": "string",
+          "name": "string",
+          "status": "string",
+          "address": {
+            "address_1": "string",
+            "address_2": "string",
+            "address_3": "string",
+            "address_4": "string",
+            "city": "string",
+            "state": "string",
+            "postal_code": "string",
+            "country": "string"
+          }
+        }
+      ]
+    }
+  ],
+  "errors": [
+    {
+      "error_code": "string",
+      "message": "string"
+    }
+  ],
+  "links": [
+    {
+      "href": "string",
+      "rel": "string",
+      "method": "string"
+    }
+  ]
+}
+```
+
+Get All Account Information.
+
+## Get Accounts by Location
+
+> Example Get Accounts info by Location Request:
+
+```javascript
+GET https://environment-url/api/v1/accounts/{account_id}/location/{location_id}
+
+// Request Headers
+Authorization: Bearer <token>
+Content-type: application/json
+```
+>Response (JSON)
+
+```json
+
+{
+  "parent_id": 0,
+  "type": "string",
+  "name": "string",
+  "status": "string",
+  "address": {
+    "address_1": "string",
+    "address_2": "string",
+    "address_3": "string",
+    "address_4": "string",
+    "city": "string",
+    "state": "string",
+    "postal_code": "string",
+    "country": "string"
+  },
+  "locations": [
+    {
+      "parent_id": 0,
+      "location_id": 0,
+      "type": "string",
+      "name": "string",
+      "status": "string",
+      "address": {
+        "address_1": "string",
+        "address_2": "string",
+        "address_3": "string",
+        "address_4": "string",
+        "city": "string",
+        "state": "string",
+        "postal_code": "string",
+        "country": "string"
+      },
+      "clients": [
+        {
+          "parent_id": 0,
+          "location_id": 0,
+          "client_id": 0,
+          "type": "string",
+          "name": "string",
+          "status": "string",
+          "address": {
+            "address_1": "string",
+            "address_2": "string",
+            "address_3": "string",
+            "address_4": "string",
+            "city": "string",
+            "state": "string",
+            "postal_code": "string",
+            "country": "string"
+          }
+        }
+      ]
+    }
+  ],
+  "errors": [
+    {
+      "error_code": "string",
+      "message": "string"
+    }
+  ],
+  "links": [
+    {
+      "href": "string",
+      "rel": "string",
+      "method": "string"
+    }
+  ]
+}
+```
+
+Get Accounts information by a specific Location ID.
+
+## Get Accounts by Client
+
+> Example Get Accounts info by Location and Client Request:
+
+```javascript
+GET https://environment-url/api/v1/accounts/{account_id}/location/{location_id}/client/{client_id}
+
+// Request Headers
+Authorization: Bearer <token>
+Content-type: application/json
+```
+>Response (JSON)
+
+```json
+
+{
+  "parent_id": 0,
+  "type": "string",
+  "name": "string",
+  "status": "string",
+  "address": {
+    "address_1": "string",
+    "address_2": "string",
+    "address_3": "string",
+    "address_4": "string",
+    "city": "string",
+    "state": "string",
+    "postal_code": "string",
+    "country": "string"
+  },
+  "locations": [
+    {
+      "parent_id": 0,
+      "location_id": 0,
+      "type": "string",
+      "name": "string",
+      "status": "string",
+      "address": {
+        "address_1": "string",
+        "address_2": "string",
+        "address_3": "string",
+        "address_4": "string",
+        "city": "string",
+        "state": "string",
+        "postal_code": "string",
+        "country": "string"
+      },
+      "clients": [
+        {
+          "parent_id": 0,
+          "location_id": 0,
+          "client_id": 0,
+          "type": "string",
+          "name": "string",
+          "status": "string",
+          "address": {
+            "address_1": "string",
+            "address_2": "string",
+            "address_3": "string",
+            "address_4": "string",
+            "city": "string",
+            "state": "string",
+            "postal_code": "string",
+            "country": "string"
+          }
+        }
+      ]
+    }
+  ],
+  "errors": [
+    {
+      "error_code": "string",
+      "message": "string"
+    }
+  ],
+  "links": [
+    {
+      "href": "string",
+      "rel": "string",
+      "method": "string"
+    }
+  ]
+}
+```
+
+Get Accounts information by a specific Location and Client ID
+.
 # Kittens
 
 ## Get All Kittens
