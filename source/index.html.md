@@ -2,7 +2,7 @@
 title: API Reference
 
 language_tabs: # must be one of https://git.io/vQNgJ
-  - http
+
 
 toc_footers:
   - <a href='https://github.com/lord/slate'>Documentation Powered by Slate</a>
@@ -27,6 +27,7 @@ Each environment also provides a Swagger page by attaching `swagger/ui/index` to
 Email `itdevapp@pennfoster.edu` to request a Developer Key.
 
 ## API Endpoints
+* All API endpoints use role based security.
 * All API access is over HTTPS.
 * All boolean values should passed as true/false.
 * POST and PUT requests, parameters can be sent using standard [HTML form encoding](https://www.w3.org/TR/html4/interact/forms.html#h-17.13.4).
@@ -175,6 +176,10 @@ Content-type: application/json
 
 Get All Account Information.
 
+### HTTP Request
+
+`GET /accounts/{account_id}`
+
 ## Get Accounts by Location
 
 > Example Get Accounts info by Location Request:
@@ -262,6 +267,10 @@ Content-type: application/json
 
 Get Accounts information by a specific Location ID.
 
+### HTTP Request
+
+`GET /accounts/{account_id}/location/{location_id}`
+
 ## Get Accounts by Client
 
 > Example Get Accounts info by Location and Client Request:
@@ -347,58 +356,19 @@ Content-type: application/json
 }
 ```
 
-Get Accounts information by a specific Location and Client ID
-.
+Get Accounts information by a specific Location and Client ID.
+
+### HTTP Request
+
+`GET /accounts/{account_id}/location/{location_id}/client/{client_id}`
+
+# Leads
+
+# Students
+
 # Kittens
 
-## Get All Kittens
 
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get
-```
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get()
-```
-
-```shell
-curl "http://example.com/api/kittens"
-  -H "Authorization: meowmeowmeow"
-```
-
-```javascript
-const kittn = require('kittn');
-
-let api = kittn.authorize('meowmeowmeow');
-let kittens = api.kittens.get();
-```
-
-> The above command returns JSON structured like this:
-
-```json
-[
-  {
-    "id": 1,
-    "name": "Fluffums",
-    "breed": "calico",
-    "fluffiness": 6,
-    "cuteness": 7
-  },
-  {
-    "id": 2,
-    "name": "Max",
-    "breed": "unknown",
-    "fluffiness": 5,
-    "cuteness": 10
-  }
-]
-```
 
 This endpoint retrieves all kittens.
 
