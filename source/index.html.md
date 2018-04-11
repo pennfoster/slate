@@ -5,7 +5,9 @@ language_tabs: # must be one of https://git.io/vQNgJ
 
 
 toc_footers:
-  - <a href='https://github.com/lord/slate'>Documentation Powered by Slate</a>
+  - <a href='https://partners.pennfoster.edu'>Penn Foster Partners</a>
+  - <a href='https://www.youtube.com/watch?v=qHrN5Mf5sgo'>Made in Scranton, PA</a>
+  - <a href='https://github.com/lord/slate'>Hat tip to Slate</a>
 
 includes:
   - errors
@@ -364,6 +366,114 @@ Get Accounts information by a specific Location and Client ID.
 
 # Leads
 
+## Create a Lead
+
+```javascript
+POST https://environment-url/api/v1/leads
+
+// Request Headers
+Authorization: Bearer <token>
+Content-type: application/json
+
+// Request Body
+[
+  [
+    {
+      "required_info": {
+        "parent_id": 143738,
+        "location_id": 247319,
+        "client_id": 333813,
+        "program_id": "00787105",
+        "first_name": "Herman",
+        "last_name": "Munster",
+        "date_of_birth": "01/01/1963",
+        "phone_number": "",
+        "email_address": "hermanmunster@example.com",
+        "contact_email_address": "contact@example.com"
+      },
+      "optional_info": {
+        "gender": "M",
+        "alternate_id": "6a535c93-dd15-41d7-8c8d-a097a83857e9",
+        "address": {
+          "address_1": "1313 Mockingbird Lane",
+          "address_2": "",
+          "address_3": "",
+          "address_4": "",
+          "city": "Mockingbird Heights",
+          "state": "CA",
+          "postal_code": "90210",
+          "country": "USA"
+        }
+      }
+    }
+  ]
+]
+```
+>Response (JSON)
+
+```json
+[
+    {
+        "lead_id": "123456",
+        "lead_status": "X",
+        "errors": [],
+        "links": []
+    }
+]
+```
+
+Create a new Lead in the Penn Foster system. A lead is used when there is a workflow required before a person can be enrolled at Penn Foster.
+
+### HTTP Request
+
+`POST /leads`
+
+This posts expects an array of Lead Objects.  The maximum length of the array is 20 per request.
+
+### Lead Object Required Fields
+
+Parameter | Size | Description
+--------- | ---- | -----------
+parent_id | 6 | Unique ID for account.  This is the Account_id.
+location_id | 6 | Unique ID for location under parent.
+client_id | 6 | Unique ID for client under parent/location.
+program_id | 15 | Program to enroll student. PF will provide this data.
+first_name | 40 | Student first name. Will remove any non-alphabetic characters.
+last_name | 40 | Student last name. Will remove any non-alphabetic characters.
+date_of_birth | 8 | Student Date of birth. Format mmddyyyy non-numeric values will be removed.
+phone_number | 20 | Student phone number. Format 18001234567, non-numeric values will be
+email_address | 40 | Student email address. Must have an @ and a period.
+contact_email_address | 40 | Patrtner Admin email address. Must have an @ and a period.
+
+### Lead Object Optional Fields
+
+Parameter | Size | Description
+--------- | ---- | -----------
+
+gender | 1 | M = Male, F = Female, U = Unknown.
+alternate_id | 75 | Unique id for student on 3rd party system.
+ removed.
+address_1 | 40 | Street address line 1.
+address_2 | 40 | Street address line 2.
+address_3 | 40 | Street address line 3.
+address_4 | 40 | Street address line 4.
+city | 25 | City.
+state | 3 | Expecting 2 characters state.
+postal_code | 12 | Expecting a 5 digit code.
+country | 3 | Expecting a 3 digit country code.
+
+### Response Object
+
+The response will be an object or an array of objects depending on the request.
+
+Name | Description
+---- | -----------
+lead_id | This a system generated id for lead.
+lead_status | X = Success. E = Error.
+errors | Error with particular object. See [Errors](#penn-foster-system-codes).
+links | Not currently populated.
+
+
 # Students
 
 At Penn Foster a person participating in 1 or more courses is referred to as a Student.
@@ -403,7 +513,7 @@ Get specific Student information.
 
 ## Create a Student
 
-> Example POST to create a new Student Request:
+> Example Create a new Student Request:
 
 ```javascript
 POST https://environment-url/api/v1/students
@@ -498,7 +608,7 @@ state | 3 | Expecting 2 characters state.
 postal_code | 12 | Expecting a 5 digit code.
 country | 3 | Expecting a 3 digit country code.
 
-### Reponse Object
+### Response Object
 
 The response will be an object or an array of objects depending on the request.
 
@@ -510,128 +620,31 @@ enrollment_status | X = Success. E = Error.
 errors | Error with particular object. See [Errors](#penn-foster-system-codes).
 links | Not currently populated.
 
+## Cancel Student
 
-# Kittens
+> Example Cancel Student Request:
 
+```javascript
+GET https://environment-url/api/v1/accounts/api/v1/students/{account_id}/{student_id}/cancel
 
+// Request Headers
+Authorization: Bearer <token>
+Content-type: application/json
+```
+>Response (JSON)
 
-This endpoint retrieves all kittens.
+```json
+{
+  "message": "Need to fill in."
+}
+```
+
+Create a request to cancel a student.  Please note this is only a *request* to cancel a student. Penn Foster will need to perform the request in order for the Student to be officially cancelled in the system.
 
 ### HTTP Request
 
-`GET http://example.com/api/kittens`
+`GET /students/{account_id}/{student_id}/cancel`
 
-### Query Parameters
-
-Parameter | Default | Description
---------- | ------- | -----------
-include_cats | false | If set to true, the result will also include cats.
-available | true | If set to false, the result will include kittens that have already been adopted.
-
-<aside class="success">
-Remember — a happy kitten is an authenticated kitten!
+<aside class="notice">
+<code>alternate_id</code> can be substituted for <code>student_id</code> in this call.
 </aside>
-
-## Get a Specific Kitten
-
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get(2)
-```
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get(2)
-```
-
-```shell
-curl "http://example.com/api/kittens/2"
-  -H "Authorization: meowmeowmeow"
-```
-
-```javascript
-const kittn = require('kittn');
-
-let api = kittn.authorize('meowmeowmeow');
-let max = api.kittens.get(2);
-```
-
-> The above command returns JSON structured like this:
-
-```json
-{
-  "id": 2,
-  "name": "Max",
-  "breed": "unknown",
-  "fluffiness": 5,
-  "cuteness": 10
-}
-```
-
-This endpoint retrieves a specific kitten.
-
-<aside class="warning">Inside HTML code blocks like this one, you can't use Markdown, so use <code>&lt;code&gt;</code> blocks to denote code.</aside>
-
-### HTTP Request
-
-`GET http://example.com/kittens/<ID>`
-
-### URL Parameters
-
-Parameter | Description
---------- | -----------
-ID | The ID of the kitten to retrieve
-
-## Delete a Specific Kitten
-
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.delete(2)
-```
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-api.kittens.delete(2)
-```
-
-```shell
-curl "http://example.com/api/kittens/2"
-  -X DELETE
-  -H "Authorization: meowmeowmeow"
-```
-
-```javascript
-const kittn = require('kittn');
-
-let api = kittn.authorize('meowmeowmeow');
-let max = api.kittens.delete(2);
-```
-
-> The above command returns JSON structured like this:
-
-```json
-{
-  "id": 2,
-  "deleted" : ":("
-}
-```
-
-This endpoint deletes a specific kitten.
-
-### HTTP Request
-
-`DELETE http://example.com/kittens/<ID>`
-
-### URL Parameters
-
-Parameter | Description
---------- | -----------
-ID | The ID of the kitten to delete
