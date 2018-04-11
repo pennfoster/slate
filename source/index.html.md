@@ -366,6 +366,151 @@ Get Accounts information by a specific Location and Client ID.
 
 # Students
 
+At Penn Foster a person participating in 1 or more courses is referred to as a Student.
+
+## Get Student Information
+
+> Example Get Student Info Request:
+
+```javascript
+GET https://environment-url/api/v1/accounts/api/v1/students/{account_id}/{student_id}
+
+// Request Headers
+Authorization: Bearer <token>
+Content-type: application/json
+```
+>Response (JSON)
+
+```json
+{
+  "resource_id": 2,
+  "student_id": "50034621",
+  "first_name": "FName",
+  "last_name": "LName",
+  "email_address": "exampl@example.com",
+  "active_status": "Graduated",
+  "date_enrolled": "2012-04-20T00:00:00",
+  "program_id": "00711105",
+  "program_name": "HIGH SCHOOL DIPLOMA"
+}
+```
+
+Get specific Student information.
+
+### HTTP Request
+
+`GET /students/{account_id}/{student_id}`
+
+## Create a Student
+
+> Example POST to create a new Student Request:
+
+```javascript
+POST https://environment-url/api/v1/students
+
+// Request Headers
+Authorization: Bearer <token>
+Content-type: application/json
+
+// Request Body
+[
+   {
+      "required_info":{
+         "parent_id":141982,
+         "location_id":244648,
+         "client_id":329209,
+         "first_name":"Joe",
+         "last_name":"Smith",
+         "email_address":"abc@mycompany.com",
+         "program_id":"00736105",
+         "ship_to_location":false,
+         "user_id":"B2BAPIENR"
+      },
+      "optional_info":{
+         "date_of_birth":"",
+         "alternate_id":"83957d62-7436-4260-8f6b-783f64721fdb",
+         "phone_number":"123456789",
+         "po_number":"",
+         "Address":{
+            "address_1":"999 18th st",
+            "address_2":"",
+            "address_3":"",
+            "address_4":"",
+            "city":"Denver",
+            "state":"CO",
+            "postal_code":"80202",
+            "country":"USA"
+         }
+      }
+   }
+]
+```
+>Response (JSON)
+
+```json
+[
+    {
+        "order_number": "51775",
+        "student_id": "56012279",
+        "enrollment_status": "X",
+        "errors": [],
+        "links": []
+    }
+]
+```
+
+Create a new Student in the Penn Foster system. Typically referred to as an Enrollment.
+
+### HTTP Request
+
+`POST /students`
+
+This posts expects an array of Student Objects.  The maximum length of the array is 20 per request.
+
+### Student Object Required Fields
+
+Parameter | Size | Description
+--------- | ---- | -----------
+parent_id | 6 | Unique ID for account.  This is the Account_id.
+location_id | 6 | Unique ID for location under parent.
+client_id | 6 | Unique ID for client under parent/location.
+first_name | 40 | Student first name. Will remove any non-alphabetic characters.
+last_name | 40 | Student last name. Will remove any non-alphabetic characters.
+email_address | 40 | Student email address. Must have an @ and a period.
+program_id | 15 | Program to enroll student. PF will provide this data.
+ship_to_location | bool | Shipping options - true will ship physical contents (if available) to location specified above - false will ship to student address.
+user_id | 15 | User ID for enrollment. PF will provide.
+
+### Student Object Optional Fields
+
+Parameter | Size | Description
+--------- | ---- | -----------
+date_of_birth | 8 | Student Date of birth. Format mmddyyyy non-numeric values will be removed.
+alternate_id | 75 | Unique id for student on 3rd party system.
+phone_number | 20 | Student phone number. Format 18001234567, non-numeric values will be removed.
+po_number | 75 | Purchase order number, if applicable.
+address_1 | 40 | Street address line 1.
+address_2 | 40 | Street address line 2.
+address_3 | 40 | Street address line 3.
+address_4 | 40 | Street address line 4.
+city | 25 | City.
+state | 3 | Expecting 2 characters state.
+postal_code | 12 | Expecting a 5 digit code.
+country | 3 | Expecting a 3 digit country code.
+
+### Reponse Object
+
+The response will be an object or an array of objects depending on the request.
+
+Name | Description
+---- | -----------
+order_number | This a system generated order number for this particular student enrollment.
+student_id | Student ID generated after successful enrollment.
+enrollment_status | X = Success. E = Error.
+errors | Error with particular object. See [Errors](#penn-foster-system-codes).
+links | Not currently populated.
+
+
 # Kittens
 
 
