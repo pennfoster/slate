@@ -16,9 +16,10 @@ search: true
 ---
 
 # Introduction
-Penn Foster's integration APIs allow partners and clients to interact with our systems and services through a set of REST endpoints (resources) which provides services like student enrollment, student progression, and account information.
+Penn Foster's (PF) integration APIs allow partners and clients to interact with our systems and services through a set of REST endpoints (resources) which provide services like student enrollment, student progression, and account information.
 
-The APIs are hosted on different environments as listed below:
+## Environments
+The APIs are hosted in 3 different environments as listed below:
 
 * Test: [https://tst-api-gateway.pennfoster.edu](https://tst-api-gateway.pennfoster.edu)
 * Staging: [https://stg-api-gateway.pennfoster.edu](https://stg-api-gateway.pennfoster.edu)
@@ -31,8 +32,8 @@ Email `itdevapp@pennfoster.edu` to request a Developer Key.
 ## API Endpoints
 * All API endpoints use role based security.
 * All API access is over HTTPS.
-* All boolean values should passed as true/false.
-* POST and PUT requests, parameters can be sent using standard [HTML form encoding](https://www.w3.org/TR/html4/interact/forms.html#h-17.13.4).
+* All boolean values should be passed as true/false.
+* For POST and PUT requests, parameters can be sent using standard [HTML form encoding](https://www.w3.org/TR/html4/interact/forms.html#h-17.13.4).
 * Optionally, POST and PUT requests may be sent in [JSON format](http://www.json.org/). The content-type of the request must be set to application/json in this case.
 
 
@@ -61,7 +62,7 @@ grant_type=client_credentials&api_key={api_key}
 }
 ```
 
-Penn Foster uses the [OAuth 2.0](https://tools.ietf.org/html/rfc6749) authentication/authorization mechanism. Before making any requests, PF will provide you with the following parameters for each environment: test, staging, and production.
+Penn Foster uses the [OAuth 2.0](https://tools.ietf.org/html/rfc6749) authentication/authorization mechanism. Before making any requests, PF will provide you with the following parameters for each [environment](#environments).
 
 Parameter | Description | Required
 --------- | ----------- | --------
@@ -84,12 +85,13 @@ You must replace <code>secretToken</code> with the token received from the authe
 At Penn Foster all API calls will require your Account ID.  This ID will be supplied by the Penn Foster team.
 Accounts are in a 3 tier hierarchy:
 
-1. Account ID (also referred to as Parent ID)
+1. Account ID *(also referred to as Parent ID)*
 2. Location ID
 3. Client ID
 
 Each Account ID can have 1 or many Location IDs.
 Each Location ID can have 1 or many Client IDs.
+
 
 ## Get All Accounts
 
@@ -428,7 +430,7 @@ Create a new Lead in the Penn Foster system. A lead is used when there is a work
 
 `POST /leads`
 
-This posts expects an array of Lead Objects.  The maximum length of the array is 20 per request.
+This post expects an array of Lead Objects.  The maximum length of the array is 20 per request.
 
 ### Lead Object Required Fields
 
@@ -437,28 +439,26 @@ Parameter | Size | Description
 parent_id | 6 | Unique ID for account.  This is the Account_id.
 location_id | 6 | Unique ID for location under parent.
 client_id | 6 | Unique ID for client under parent/location.
-program_id | 15 | Program to enroll student. PF will provide this data.
+program_id | 15 | Program to enroll person into. PF will provide this data.
 first_name | 40 | Student first name. Will remove any non-alphabetic characters.
 last_name | 40 | Student last name. Will remove any non-alphabetic characters.
-date_of_birth | 8 | Student Date of birth. Format mmddyyyy non-numeric values will be removed.
-phone_number | 20 | Student phone number. Format 18001234567, non-numeric values will be
-email_address | 40 | Student email address. Must have an @ and a period.
-contact_email_address | 40 | Patrtner Admin email address. Must have an @ and a period.
+date_of_birth | 8 | Student Date of birth. Format `mmddyyyy`, non-numeric values will be removed.
+phone_number | 20 | Student phone number. Format `18001234567`, non-numeric values will be removed.
+email_address | 40 | Student email address. Must have an `@` and a `.`.
+contact_email_address | 40 | Patrtner Admin email address. Must have an `@` and a `.`.
 
 ### Lead Object Optional Fields
 
 Parameter | Size | Description
 --------- | ---- | -----------
-
 gender | 1 | M = Male, F = Female, U = Unknown.
 alternate_id | 75 | Unique id for student on 3rd party system.
- removed.
 address_1 | 40 | Street address line 1.
 address_2 | 40 | Street address line 2.
 address_3 | 40 | Street address line 3.
 address_4 | 40 | Street address line 4.
 city | 25 | City.
-state | 3 | Expecting 2 characters state.
+state | 3 | Expecting 2 character state.
 postal_code | 12 | Expecting a 5 digit code.
 country | 3 | Expecting a 3 digit country code.
 
@@ -468,9 +468,9 @@ The response will be an object or an array of objects depending on the request.
 
 Name | Description
 ---- | -----------
-lead_id | This a system generated id for lead.
+lead_id | A system generated ID for lead.
 lead_status | X = Success. E = Error.
-errors | Error with particular object. See [Errors](#penn-foster-system-codes).
+errors | Error with particular Lead object. See [Errors](#penn-foster-system-codes).
 links | Not currently populated.
 
 
@@ -505,7 +505,7 @@ Content-type: application/json
 }
 ```
 
-Get specific Student information.
+Get a specific Student's information.
 
 ### HTTP Request
 
@@ -575,7 +575,7 @@ Create a new Student in the Penn Foster system. Typically referred to as an Enro
 
 `POST /students`
 
-This posts expects an array of Student Objects.  The maximum length of the array is 20 per request.
+This post expects an array of Student objects.  The maximum length of the array is 20 per request.
 
 ### Student Object Required Fields
 
@@ -586,25 +586,25 @@ location_id | 6 | Unique ID for location under parent.
 client_id | 6 | Unique ID for client under parent/location.
 first_name | 40 | Student first name. Will remove any non-alphabetic characters.
 last_name | 40 | Student last name. Will remove any non-alphabetic characters.
-email_address | 40 | Student email address. Must have an @ and a period.
-program_id | 15 | Program to enroll student. PF will provide this data.
-ship_to_location | bool | Shipping options - true will ship physical contents (if available) to location specified above - false will ship to student address.
-user_id | 15 | User ID for enrollment. PF will provide.
+email_address | 40 | Student email address. Must have an `@` and a `.`.
+program_id | 15 | Program to enroll student into. PF will provide this data.
+ship_to_location | bool | Shipping options. `true` will ship physical contents (if available) to location specified on Account. `false` will ship to student address.
+user_id | 15 | User ID for system. PF will provide.
 
 ### Student Object Optional Fields
 
 Parameter | Size | Description
 --------- | ---- | -----------
-date_of_birth | 8 | Student Date of birth. Format mmddyyyy non-numeric values will be removed.
+date_of_birth | 8 | Student Date of birth. Format `mmddyyyy` non-numeric values will be removed.
 alternate_id | 75 | Unique id for student on 3rd party system.
-phone_number | 20 | Student phone number. Format 18001234567, non-numeric values will be removed.
+phone_number | 20 | Student phone number. Format `18001234567`, non-numeric values will be removed.
 po_number | 75 | Purchase order number, if applicable.
 address_1 | 40 | Street address line 1.
 address_2 | 40 | Street address line 2.
 address_3 | 40 | Street address line 3.
 address_4 | 40 | Street address line 4.
 city | 25 | City.
-state | 3 | Expecting 2 characters state.
+state | 3 | Expecting 2 character state.
 postal_code | 12 | Expecting a 5 digit code.
 country | 3 | Expecting a 3 digit country code.
 
@@ -614,7 +614,7 @@ The response will be an object or an array of objects depending on the request.
 
 Name | Description
 ---- | -----------
-order_number | This a system generated order number for this particular student enrollment.
+order_number | A system generated order number for this particular student object.
 student_id | Student ID generated after successful enrollment.
 enrollment_status | X = Success. E = Error.
 errors | Error with particular object. See [Errors](#penn-foster-system-codes).
@@ -635,11 +635,11 @@ Content-type: application/json
 
 ```json
 {
-  "message": "Need to fill in."
+  "message": "Accepted"
 }
 ```
 
-Create a request to cancel a student.  Please note this is only a *request* to cancel a student. Penn Foster will need to perform the request in order for the Student to be officially cancelled in the system.
+Create a request to cancel a student.  Please note this is only a *request* to cancel a student. The Penn Foster team will need to execute the request in order for the Student to be officially cancelled in the system.
 
 ### HTTP Request
 
