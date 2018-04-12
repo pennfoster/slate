@@ -6,7 +6,7 @@ language_tabs: # must be one of https://git.io/vQNgJ
 
 toc_footers:
   - <a href='https://partners.pennfoster.edu'>Penn Foster Partners</a>
-  - <a href='https://www.youtube.com/watch?v=qHrN5Mf5sgo'>Made in Scranton, PA</a>
+  - <a href='https://www.youtube.com/watch?v=cS9qCre_sv8'>Made in Scranton, PA</a>
   - <a href='https://github.com/lord/slate'>Hat tip to Slate</a>
 
 includes:
