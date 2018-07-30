@@ -627,12 +627,12 @@ Get a specific Learner's information.
 
 `GET /learners/{student_id}`
 
-## Cancel Student
+## Cancel Learners
 
-> Example Cancel Student Request:
+> Example Cancel Learner Request:
 
 ```javascript
-GET https://environment-url/api/v1/accounts/api/v1/students/{account_id}/{student_id}/cancel
+GET https://environment-url/api/v1/accounts/api/v1/learners/cancel?student_id=55555555
 
 // Request Headers
 Authorization: Bearer <token>
@@ -642,16 +642,31 @@ Content-type: application/json
 
 ```json
 {
-  "message": "Accepted"
+  "organization_id": 123456,
+  "location_id": 247319,
+  "client_id": 333813,
+  "student_id": 5123456,
+  "alternate_id": "example@example.com",
+  "program_id": "00787105"
 }
 ```
 
-Create a request to cancel a student.  Please note this is only a *request* to cancel a student. The Penn Foster team will need to execute the request in order for the Student to be officially cancelled in the system.
+Create a request to cancel a learner.  Please note this is only a *request* to cancel a learner. The Penn Foster team will need to execute the request in order for the learner to be officially cancelled in the system.
+
+A learner can be cancelled by `Student ID` or `Alternate ID`.
 
 ### HTTP Request
 
-`GET /students/{account_id}/{student_id}/cancel`
+`POST /learners/{student_id}/cancel`
 
-<aside class="notice">
-<code>alternate_id</code> can be substituted for <code>student_id</code> in this call.
-</aside>
+### URL Parameters
+
+An `Alternate ID` or `Student ID` is required.
+
+If an `Alternate ID` is provided, then a `Program ID` is required.
+
+Parameter | Size | Description
+--------- | ---- | -----------
+student_id | 8 | Unique ID for for Learner at Penn Foster.
+alternate_id | 75 | Unique ID for 3rd party.
+program_id | 8 | Specific Program ID to cancel for Student/Alternate ID.
