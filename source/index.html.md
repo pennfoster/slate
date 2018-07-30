@@ -388,7 +388,7 @@ Content-type: application/json
         "first_name": "Herman",
         "last_name": "Munster",
         "date_of_birth": "01/01/1963",
-        "phone_number": "",
+        "phone_number": "5701234567",
         "email_address": "hermanmunster@example.com",
         "contact_email_address": "contact@example.com"
       },
@@ -473,49 +473,16 @@ errors | Error with particular Lead object. See [Errors](#penn-foster-system-cod
 links | Not currently populated.
 
 
-# Students
+# Learners
 
-At Penn Foster a person participating in 1 or more courses is referred to as a Student.
+At Penn Foster a person participating in 1 or more courses is referred to as a Learner.  Historically, we referred to Learners as Students, therefore, you will see a Learner is given a `Student ID` once enrolled at Penn Foster.
 
-## Get Student Information
+## Create a Learner
 
-> Example Get Student Info Request:
-
-```javascript
-GET https://environment-url/api/v1/accounts/api/v1/students/{account_id}/{student_id}
-
-// Request Headers
-Authorization: Bearer <token>
-Content-type: application/json
-```
->Response (JSON)
-
-```json
-{
-  "resource_id": 2,
-  "student_id": "50034621",
-  "first_name": "FName",
-  "last_name": "LName",
-  "email_address": "exampl@example.com",
-  "active_status": "Graduated",
-  "date_enrolled": "2012-04-20T00:00:00",
-  "program_id": "00711105",
-  "program_name": "HIGH SCHOOL DIPLOMA"
-}
-```
-
-Get a specific Student's information.
-
-### HTTP Request
-
-`GET /students/{account_id}/{student_id}`
-
-## Create a Student
-
-> Example Create a new Student Request:
+> Example Create a new Learner Request:
 
 ```javascript
-POST https://environment-url/api/v1/students
+POST https://environment-url/api/v1/learners
 
 // Request Headers
 Authorization: Bearer <token>
@@ -568,29 +535,29 @@ Content-type: application/json
 ]
 ```
 
-Create a new Student in the Penn Foster system. Typically referred to as an Enrollment.
+Create a new Learner in the Penn Foster system. Typically referred to as an Enrollment.
 
 ### HTTP Request
 
-`POST /students`
+`POST /learners`
 
-This post expects an array of Student objects.  The maximum length of the array is 20 per request.
+This post expects an array of Learner objects.  The maximum length of the array is 20 per request.
 
-### Student Object Required Fields
+### Learner Object Required Fields
 
 Parameter | Size | Description
 --------- | ---- | -----------
-organization_id | 6 | Unique ID for account.  This is the Account_id.
-location_id | 6 | Unique ID for location under parent.
-client_id | 6 | Unique ID for client under parent/location.
+organization_id | 6 | Unique ID for organization.
+location_id | 6 | Unique ID for location under an organization.
+client_id | 6 | Unique ID for client under an organization/location.
 first_name | 40 | Student first name. Will remove any non-alphabetic characters.
 last_name | 40 | Student last name. Will remove any non-alphabetic characters.
 email_address | 40 | Student email address. Must have an `@` and a `.`.
-program_id | 15 | Program to enroll student into. PF will provide this data.
+program_id | 15 | Program to enroll learner into. PF will provide this data.
 ship_to_location | bool | Shipping options. `true` will ship physical contents (if available) to location specified on Account. `false` will ship to student address.
 user_id | 15 | User ID for system. PF will provide.
 
-### Student Object Optional Fields
+### Learner Object Optional Fields
 
 Parameter | Size | Description
 --------- | ---- | -----------
@@ -618,6 +585,47 @@ student_id | Student ID generated after successful enrollment.
 enrollment_status | X = Success. E = Error.
 errors | Error with particular object. See [Errors](#penn-foster-system-codes).
 links | Not currently populated.
+
+## Get Learner Information
+
+> Example Get Learner Info Request:
+
+```javascript
+GET https://environment-url/api/v1/learners/{student_id}
+
+// Request Headers
+Authorization: Bearer <token>
+Content-type: application/json
+```
+>Response (JSON)
+
+```json
+{
+    "organization_id": 146151,
+    "location_id": 252248,
+    "client_id": 334393,
+    "student_id": "56014830",
+    "alternate_id": "3B721B8F-64FF-40D4-9944-1FF8983322AF",
+    "alternate_location_id": "ThisCouldBeAnyTypeOfData",
+    "alternate_client_id": "ThisCouldBeAnyTypeOfData",
+    "first_name": "Mr Baker N",
+    "last_name": "Test",
+    "email_address": "test@test.com",
+    "program_id": "TES01105",
+    "program_name": "SOFT SKILLS",
+    "active_status": "Active", //Active, Inactive, Graduated, Canceled
+    "date_enrolled": "07/18/2018",
+    "date_last_active": "07/18/2018",
+    "date_completed": "07/18/2018",
+    "expiration_date": "07/18/2019"
+}
+```
+
+Get a specific Learner's information.
+
+### HTTP Request
+
+`GET /learners/{student_id}`
 
 ## Cancel Student
 
