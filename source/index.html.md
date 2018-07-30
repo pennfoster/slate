@@ -16,7 +16,7 @@ search: true
 ---
 
 # Introduction
-Penn Foster's (PF) integration APIs allow partners and clients to interact with our systems and services through a set of REST endpoints (resources) which provide services like student enrollment, student progression, and account information.
+Penn Foster's (PF) integration APIs allow partners and clients to interact with our systems and services through a set of REST endpoints (resources) which provide services like learner enrollment, learner progression, and organization information.
 
 ## Environments
 The APIs are hosted in 3 different environments as listed below:
@@ -80,25 +80,24 @@ Penn Foster expects for the API token to be included in all API requests to the 
 You must replace <code>secretToken</code> with the token received from the authentication call.
 </aside>
 
-# Accounts
+# Organizations
 
-At Penn Foster all API calls will require your Account ID.  This ID will be supplied by the Penn Foster team.
-Accounts are in a 3 tier hierarchy:
+Organizations are in a 3 tier hierarchy:
 
-1. Account ID *(also referred to as Parent ID)*
+1. Organization ID *(also referred to as Parent ID)*
 2. Location ID
 3. Client ID
 
-Each Account ID can have 1 or many Location IDs.
+Each Organization ID can have 1 or many Location IDs.
 Each Location ID can have 1 or many Client IDs.
 
 
-## Get All Accounts
+## Get All Organizations
 
-> Example Get All Accounts Request:
+> Example Get All Organizations Request:
 
 ```javascript
-GET https://environment-url/api/v1/accounts/<account_id>
+GET https://environment-url/api/v1/organizations/<organization_id>
 
 // Request Headers
 Authorization: Bearer <token>
@@ -109,7 +108,7 @@ Content-type: application/json
 ```json
 
 {
-  "parent_id": 0,
+  "organization_id": 0,
   "type": "string",
   "name": "string",
   "status": "string",
@@ -125,7 +124,7 @@ Content-type: application/json
   },
   "locations": [
     {
-      "parent_id": 0,
+      "organization_id": 0,
       "location_id": 0,
       "type": "string",
       "name": "string",
@@ -142,7 +141,7 @@ Content-type: application/json
       },
       "clients": [
         {
-          "parent_id": 0,
+          "organization_id": 0,
           "location_id": 0,
           "client_id": 0,
           "type": "string",
@@ -178,18 +177,18 @@ Content-type: application/json
 }
 ```
 
-Get All Account Information.
+Get All Organization Information.
 
 ### HTTP Request
 
-`GET /accounts/{account_id}`
+`GET /organizations/{organization_id}`
 
-## Get Accounts by Location
+## Get Organizations by Location
 
-> Example Get Accounts info by Location Request:
+> Example Get Organizations info by Location Request:
 
 ```javascript
-GET https://environment-url/api/v1/accounts/{account_id}/location/{location_id}
+GET https://environment-url/api/v1/organizations/{organization_id}/location/{location_id}
 
 // Request Headers
 Authorization: Bearer <token>
@@ -200,7 +199,7 @@ Content-type: application/json
 ```json
 
 {
-  "parent_id": 0,
+  "organization_id": 0,
   "type": "string",
   "name": "string",
   "status": "string",
@@ -216,7 +215,7 @@ Content-type: application/json
   },
   "locations": [
     {
-      "parent_id": 0,
+      "organization_id": 0,
       "location_id": 0,
       "type": "string",
       "name": "string",
@@ -233,7 +232,7 @@ Content-type: application/json
       },
       "clients": [
         {
-          "parent_id": 0,
+          "organization_id": 0,
           "location_id": 0,
           "client_id": 0,
           "type": "string",
@@ -269,18 +268,18 @@ Content-type: application/json
 }
 ```
 
-Get Accounts information by a specific Location ID.
+Get Organizations information by a specific Location ID.
 
 ### HTTP Request
 
-`GET /accounts/{account_id}/location/{location_id}`
+`GET /organizations/{organization_id}/location/{location_id}`
 
-## Get Accounts by Client
+## Get Organizations by Client
 
-> Example Get Accounts info by Location and Client Request:
+> Example Get Organizations info by Location and Client Request:
 
 ```javascript
-GET https://environment-url/api/v1/accounts/{account_id}/location/{location_id}/client/{client_id}
+GET https://environment-url/api/v1/organizations/{organization_id}/location/{location_id}/client/{client_id}
 
 // Request Headers
 Authorization: Bearer <token>
@@ -291,7 +290,7 @@ Content-type: application/json
 ```json
 
 {
-  "parent_id": 0,
+  "organization_id": 0,
   "type": "string",
   "name": "string",
   "status": "string",
@@ -307,7 +306,7 @@ Content-type: application/json
   },
   "locations": [
     {
-      "parent_id": 0,
+      "organization_id": 0,
       "location_id": 0,
       "type": "string",
       "name": "string",
@@ -324,7 +323,7 @@ Content-type: application/json
       },
       "clients": [
         {
-          "parent_id": 0,
+          "organization_id": 0,
           "location_id": 0,
           "client_id": 0,
           "type": "string",
@@ -360,11 +359,11 @@ Content-type: application/json
 }
 ```
 
-Get Accounts information by a specific Location and Client ID.
+Get Organizations information by a specific Location and Client ID.
 
 ### HTTP Request
 
-`GET /accounts/{account_id}/location/{location_id}/client/{client_id}`
+`GET /organizations/{organization_id}/location/{location_id}/client/{client_id}`
 
 # Leads
 
@@ -382,14 +381,14 @@ Content-type: application/json
   [
     {
       "required_info": {
-        "parent_id": 143738,
+        "organization_id": 143738,
         "location_id": 247319,
         "client_id": 333813,
         "program_id": "00787105",
         "first_name": "Herman",
         "last_name": "Munster",
         "date_of_birth": "01/01/1963",
-        "phone_number": "",
+        "phone_number": "5701234567",
         "email_address": "hermanmunster@example.com",
         "contact_email_address": "contact@example.com"
       },
@@ -436,15 +435,15 @@ This post expects an array of Lead Objects.  The maximum length of the array is 
 
 Parameter | Size | Description
 --------- | ---- | -----------
-parent_id | 6 | Unique ID for account.  This is the Account_id.
-location_id | 6 | Unique ID for location under parent.
-client_id | 6 | Unique ID for client under parent/location.
+organization_id | 6 | Unique ID for an organization.
+location_id | 6 | Unique ID for location under an organization.
+client_id | 6 | Unique ID for client under an organization/location.
 program_id | 15 | Program to enroll person into. PF will provide this data.
-first_name | 40 | Student first name. Will remove any non-alphabetic characters.
-last_name | 40 | Student last name. Will remove any non-alphabetic characters.
-date_of_birth | 8 | Student Date of birth. Format `mmddyyyy`, non-numeric values will be removed.
-phone_number | 20 | Student phone number. Format `18001234567`, non-numeric values will be removed.
-email_address | 40 | Student email address. Must have an `@` and a `.`.
+first_name | 40 | Learner first name. Will remove any non-alphabetic characters.
+last_name | 40 | Learner last name. Will remove any non-alphabetic characters.
+date_of_birth | 8 | Learner Date of birth. Format `mmddyyyy`, non-numeric values will be removed.
+phone_number | 20 | Learner phone number. Format `18001234567`, non-numeric values will be removed.
+email_address | 40 | Learner email address. Must have an `@` and a `.`.
 contact_email_address | 40 | Patrtner Admin email address. Must have an `@` and a `.`.
 
 ### Lead Object Optional Fields
@@ -452,7 +451,7 @@ contact_email_address | 40 | Patrtner Admin email address. Must have an `@` and 
 Parameter | Size | Description
 --------- | ---- | -----------
 gender | 1 | M = Male, F = Female, U = Unknown.
-alternate_id | 75 | Unique id for student on 3rd party system.
+alternate_id | 75 | Unique id for learner on 3rd party system.
 address_1 | 40 | Street address line 1.
 address_2 | 40 | Street address line 2.
 address_3 | 40 | Street address line 3.
@@ -474,49 +473,16 @@ errors | Error with particular Lead object. See [Errors](#penn-foster-system-cod
 links | Not currently populated.
 
 
-# Students
+# Learners
 
-At Penn Foster a person participating in 1 or more courses is referred to as a Student.
+At Penn Foster a person participating in 1 or more courses is referred to as a Learner.  Historically, we referred to Learners as Students, therefore, you will see a Learner is given a `Student ID` once enrolled at Penn Foster.
 
-## Get Student Information
+## Create a Learner
 
-> Example Get Student Info Request:
-
-```javascript
-GET https://environment-url/api/v1/accounts/api/v1/students/{account_id}/{student_id}
-
-// Request Headers
-Authorization: Bearer <token>
-Content-type: application/json
-```
->Response (JSON)
-
-```json
-{
-  "resource_id": 2,
-  "student_id": "50034621",
-  "first_name": "FName",
-  "last_name": "LName",
-  "email_address": "exampl@example.com",
-  "active_status": "Graduated",
-  "date_enrolled": "2012-04-20T00:00:00",
-  "program_id": "00711105",
-  "program_name": "HIGH SCHOOL DIPLOMA"
-}
-```
-
-Get a specific Student's information.
-
-### HTTP Request
-
-`GET /students/{account_id}/{student_id}`
-
-## Create a Student
-
-> Example Create a new Student Request:
+> Example Create a new Learner Request:
 
 ```javascript
-POST https://environment-url/api/v1/students
+POST https://environment-url/api/v1/learners
 
 // Request Headers
 Authorization: Bearer <token>
@@ -526,7 +492,7 @@ Content-type: application/json
 [
    {
       "required_info":{
-         "parent_id":141982,
+         "organization_id":141982,
          "location_id":244648,
          "client_id":329209,
          "first_name":"Joe",
@@ -569,35 +535,35 @@ Content-type: application/json
 ]
 ```
 
-Create a new Student in the Penn Foster system. Typically referred to as an Enrollment.
+Create a new Learner in the Penn Foster system. Typically referred to as an Enrollment.
 
 ### HTTP Request
 
-`POST /students`
+`POST /learners`
 
-This post expects an array of Student objects.  The maximum length of the array is 20 per request.
+This post expects an array of Learner objects.  The maximum length of the array is 20 per request.
 
-### Student Object Required Fields
+### Learner Object Required Fields
 
 Parameter | Size | Description
 --------- | ---- | -----------
-parent_id | 6 | Unique ID for account.  This is the Account_id.
-location_id | 6 | Unique ID for location under parent.
-client_id | 6 | Unique ID for client under parent/location.
-first_name | 40 | Student first name. Will remove any non-alphabetic characters.
-last_name | 40 | Student last name. Will remove any non-alphabetic characters.
-email_address | 40 | Student email address. Must have an `@` and a `.`.
-program_id | 15 | Program to enroll student into. PF will provide this data.
-ship_to_location | bool | Shipping options. `true` will ship physical contents (if available) to location specified on Account. `false` will ship to student address.
+organization_id | 6 | Unique ID for organization.
+location_id | 6 | Unique ID for location under an organization.
+client_id | 6 | Unique ID for client under an organization/location.
+first_name | 40 | Learner first name. Will remove any non-alphabetic characters.
+last_name | 40 | Learner last name. Will remove any non-alphabetic characters.
+email_address | 40 | Learner email address. Must have an `@` and a `.`.
+program_id | 15 | Program to enroll learner into. PF will provide this data.
+ship_to_location | bool | Shipping options. `true` will ship physical contents (if available) to location specified on system. `false` will ship to learner address.
 user_id | 15 | User ID for system. PF will provide.
 
-### Student Object Optional Fields
+### Learner Object Optional Fields
 
 Parameter | Size | Description
 --------- | ---- | -----------
-date_of_birth | 8 | Student Date of birth. Format `mmddyyyy` non-numeric values will be removed.
-alternate_id | 75 | Unique id for student on 3rd party system.
-phone_number | 20 | Student phone number. Format `18001234567`, non-numeric values will be removed.
+date_of_birth | 8 | Learner Date of birth. Format `mmddyyyy` non-numeric values will be removed.
+alternate_id | 75 | Unique id for learner on 3rd party system.
+phone_number | 20 | Learner phone number. Format `18001234567`, non-numeric values will be removed.
 po_number | 75 | Purchase order number, if applicable.
 address_1 | 40 | Street address line 1.
 address_2 | 40 | Street address line 2.
@@ -614,18 +580,225 @@ The response will be an object or an array of objects depending on the request.
 
 Name | Description
 ---- | -----------
-order_number | A system generated order number for this particular student object.
-student_id | Student ID generated after successful enrollment.
+order_number | A system generated order number for this particular learner object.
+student_id | Student ID (Learner ID) generated after successful enrollment.
 enrollment_status | X = Success. E = Error.
 errors | Error with particular object. See [Errors](#penn-foster-system-codes).
 links | Not currently populated.
 
-## Cancel Student
+## Get Learners by Organization
 
-> Example Cancel Student Request:
+> Example Get Learner Info Request:
 
 ```javascript
-GET https://environment-url/api/v1/accounts/api/v1/students/{account_id}/{student_id}/cancel
+GET https://environment-url/api/v1/learners?organization_id=141982&rows_per_page=10&page_number=1
+
+// Request Headers
+Authorization: Bearer <token>
+Content-type: application/json
+```
+>Response (JSON)
+
+```json
+
+{
+    "page_number": 1,
+    "page_count": 75,
+    "record_count": 746,
+    "results": {
+        "52975707": {
+            "organization_id": 141982,
+            "location_id": 244648,
+            "client_id": 329209,
+            "student_id": "52975707",
+            "alternate_id": "ThisCouldBeAnyTypeOfData",
+            "alternate_location_id": "ThisCouldBeAnyTypeOfData",
+            "first_name": "First",
+            "last_name": "Last",
+            "email_address": "test@test.com",
+            "program_id": "TES01105",
+            "program_name": "SOFT SKILLS",
+            "active_status": "Active", //Active, Inactive, Graduated, Canceled
+            "date_enrolled": "07/18/2018",
+            "date_last_active": "07/18/2018",
+            "date_completed": "07/18/2018",
+            "expiration_date": "07/18/2019"
+        },
+        "52977876": {
+            "organization_id": 141982,
+            "location_id": 244648,
+            "client_id": 329209,
+            "student_id": "52977876",
+            "alternate_id": "ThisCouldBeAnyTypeOfData",
+            "alternate_location_id": "ThisCouldBeAnyTypeOfData",
+            "first_name": "Johnny",
+            "last_name": "Twosheds",
+            "email_address": "test@test.com",
+            "program_id": "TES01105",
+            "program_name": "SOFT SKILLS",
+            "active_status": "Active", //Active, Inactive, Graduated, Canceled
+            "date_enrolled": "07/18/2018",
+            "date_last_active": "07/18/2018",
+            "date_completed": "07/18/2018",
+            "expiration_date": "07/18/2019"
+        },
+        ...
+  }
+}
+```
+
+Get all learners by `Organization ID`.
+
+Will return a dictionary of learner objects.
+
+### HTTP Request
+
+`GET /learners?organization_id={organization_id}`
+
+### URL Parameters
+
+
+Parameter | Size | Required | Description
+--------- | ---- | -------- | -----------
+organization_id | 6 | Yes | Unique ID for an organization.
+location_id | 6 | No | Unique ID for location under an organization.
+alternate_location_id | 6 | No | 3rd party unique ID for location under an organization.
+client_id | 6 | No | Unique ID for client under an organization/location.
+alternate_client_id | 6 | No | 3rd party unique ID for client under an organization/location.
+page_number | 5 | No | If using pagination specify the page number you want returned.
+rows_per_page | 5 | No | If using pagination specify the number of records per page.
+
+## Get Learners by Alternate ID
+
+> Example Get Learner by Alternate ID Request:
+
+```javascript
+GET https://environment-url/api/v1/learners/6d5f84ed-2fad-4e09-b8bb-e50fac2d00f7
+
+// Request Headers
+Authorization: Bearer <token>
+Content-type: application/json
+```
+>Response (JSON)
+
+```json
+
+{
+    "page_number": 1,
+    "page_count": 1,
+    "record_count": 2,
+    "results": {
+        "52975707": {
+            "organization_id": 141982,
+            "location_id": 244648,
+            "client_id": 329209,
+            "student_id": "52975707",
+            "alternate_id": "6d5f84ed-2fad-4e09-b8bb-e50fac2d00f7",
+            "alternate_location_id": "ThisCouldBeAnyTypeOfData",
+            "first_name": "First",
+            "last_name": "Last",
+            "email_address": "test@test.com",
+            "program_id": "TES01105",
+            "program_name": "SOFT SKILLS",
+            "active_status": "Active", //Active, Inactive, Graduated, Canceled
+            "date_enrolled": "07/18/2018",
+            "date_last_active": "07/18/2018",
+            "date_completed": "07/18/2018",
+            "expiration_date": "07/18/2019"
+        },
+        "52977876": {
+            "organization_id": 141982,
+            "location_id": 244648,
+            "client_id": 329209,
+            "student_id": "52977876",
+            "alternate_id": "6d5f84ed-2fad-4e09-b8bb-e50fac2d00f7",
+            "alternate_location_id": "ThisCouldBeAnyTypeOfData",
+            "first_name": "Johnny",
+            "last_name": "Twosheds",
+            "email_address": "test@test.com",
+            "program_id": "TES01105",
+            "program_name": "SOFT SKILLS",
+            "active_status": "Active", //Active, Inactive, Graduated, Canceled
+            "date_enrolled": "07/18/2018",
+            "date_last_active": "07/18/2018",
+            "date_completed": "07/18/2018",
+            "expiration_date": "07/18/2019"
+        },
+  }
+}
+```
+
+Get learners by `Alternate ID`.
+
+Will return a dictionary of learner objects.
+
+### HTTP Request
+
+`GET /learners?alternate_id={alternate_id}`
+
+### URL Parameters
+
+
+Parameter | Size | Required | Description
+--------- | ---- | -------- | -----------
+alternate_id | 75 | Yes | 3rd party unique ID for a learner.
+organization_id | 6 | No | Unique ID for an organization.
+location_id | 6 | No | Unique ID for location under an organization.
+alternate_location_id | 6 | No | 3rd party unique ID for location under an organization.
+client_id | 6 | No | Unique ID for client under an organization/location.
+alternate_client_id | 6 | No | 3rd party unique ID for client under an organization/location.
+page_number | 5 | No | If using pagination specify the page number you want returned.
+rows_per_page | 5 | No | If using pagination specify the number of records per page.
+
+## Get Learners by Student ID
+
+> Example Get Learner by Student ID Request:
+
+```javascript
+GET https://environment-url/api/v1/learners/52975707
+
+// Request Headers
+Authorization: Bearer <token>
+Content-type: application/json
+```
+>Response (JSON)
+
+```json
+
+{
+  "organization_id": 141982,
+  "location_id": 244648,
+  "client_id": 329209,
+  "student_id": "52975707",
+  "alternate_id": "6d5f84ed-2fad-4e09-b8bb-e50fac2d00f7",
+  "alternate_location_id": "ThisCouldBeAnyTypeOfData",
+  "first_name": "First",
+  "last_name": "Last",
+  "email_address": "test@test.com",
+  "program_id": "TES01105",
+  "program_name": "SOFT SKILLS",
+  "active_status": "Active", //Active, Inactive, Graduated, Canceled
+  "date_enrolled": "07/18/2018",
+  "date_last_active": "07/18/2018",
+  "date_completed": "07/18/2018",
+  "expiration_date": "07/18/2019"
+}
+```
+
+Get learners by `Student ID`.
+
+Will return one learner object.
+
+### HTTP Request
+
+`GET /learners?student_id={student_id}`
+
+## Cancel Learners
+
+> Example Cancel Learner Request:
+
+```javascript
+POST https://environment-url/api/v1/api/v1/learners/cancel
 
 // Request Headers
 Authorization: Bearer <token>
@@ -635,16 +808,31 @@ Content-type: application/json
 
 ```json
 {
-  "message": "Accepted"
+  "organization_id": 123456,
+  "location_id": 247319,
+  "client_id": 333813,
+  "student_id": 5123456,
+  "alternate_id": "example@example.com",
+  "program_id": "00787105"
 }
 ```
 
-Create a request to cancel a student.  Please note this is only a *request* to cancel a student. The Penn Foster team will need to execute the request in order for the Student to be officially cancelled in the system.
+Create a request to cancel a learner.  Please note this is only a *request* to cancel a learner. The Penn Foster team will need to execute the request in order for the learner to be officially cancelled in the system.
+
+A learner can be cancelled by `Student ID` or `Alternate ID`.
 
 ### HTTP Request
 
-`GET /students/{account_id}/{student_id}/cancel`
+`POST /learners/{student_id}/cancel`
 
-<aside class="notice">
-<code>alternate_id</code> can be substituted for <code>student_id</code> in this call.
-</aside>
+### URL Parameters
+
+An `Alternate ID` or `Student ID` is required.
+
+If an `Alternate ID` is provided, then a `Program ID` is required.
+
+Parameter | Size | Description
+--------- | ---- | -----------
+student_id | 8 | Unique ID for for Learner at Penn Foster.
+alternate_id | 75 | Unique ID for 3rd party.
+program_id | 8 | Specific Program ID to cancel for Learner/Alternate ID.
