@@ -124,7 +124,7 @@ Content-type: application/json
   },
   "locations": [
     {
-      "parent_id": 0,
+      "organization_id": 0,
       "location_id": 0,
       "type": "string",
       "name": "string",
@@ -141,7 +141,7 @@ Content-type: application/json
       },
       "clients": [
         {
-          "parent_id": 0,
+          "organization_id": 0,
           "location_id": 0,
           "client_id": 0,
           "type": "string",
@@ -215,7 +215,7 @@ Content-type: application/json
   },
   "locations": [
     {
-      "parent_id": 0,
+      "organization_id": 0,
       "location_id": 0,
       "type": "string",
       "name": "string",
@@ -232,7 +232,7 @@ Content-type: application/json
       },
       "clients": [
         {
-          "parent_id": 0,
+          "organization_id": 0,
           "location_id": 0,
           "client_id": 0,
           "type": "string",
@@ -306,7 +306,7 @@ Content-type: application/json
   },
   "locations": [
     {
-      "parent_id": 0,
+      "organization_id": 0,
       "location_id": 0,
       "type": "string",
       "name": "string",
@@ -323,7 +323,7 @@ Content-type: application/json
       },
       "clients": [
         {
-          "parent_id": 0,
+          "organization_id": 0,
           "location_id": 0,
           "client_id": 0,
           "type": "string",
@@ -381,7 +381,7 @@ Content-type: application/json
   [
     {
       "required_info": {
-        "parent_id": 143738,
+        "organization_id": 143738,
         "location_id": 247319,
         "client_id": 333813,
         "program_id": "00787105",
@@ -435,9 +435,9 @@ This post expects an array of Lead Objects.  The maximum length of the array is 
 
 Parameter | Size | Description
 --------- | ---- | -----------
-parent_id | 6 | Unique ID for account.  This is the Account_id.
-location_id | 6 | Unique ID for location under parent.
-client_id | 6 | Unique ID for client under parent/location.
+organization_id | 6 | Unique ID for an organization.
+location_id | 6 | Unique ID for location under an organization.
+client_id | 6 | Unique ID for client under an organization/location.
 program_id | 15 | Program to enroll person into. PF will provide this data.
 first_name | 40 | Student first name. Will remove any non-alphabetic characters.
 last_name | 40 | Student last name. Will remove any non-alphabetic characters.
@@ -525,7 +525,7 @@ Content-type: application/json
 [
    {
       "required_info":{
-         "parent_id":141982,
+         "organization_id":141982,
          "location_id":244648,
          "client_id":329209,
          "first_name":"Joe",
@@ -580,7 +580,7 @@ This post expects an array of Student objects.  The maximum length of the array 
 
 Parameter | Size | Description
 --------- | ---- | -----------
-parent_id | 6 | Unique ID for account.  This is the Account_id.
+organization_id | 6 | Unique ID for account.  This is the Account_id.
 location_id | 6 | Unique ID for location under parent.
 client_id | 6 | Unique ID for client under parent/location.
 first_name | 40 | Student first name. Will remove any non-alphabetic characters.
