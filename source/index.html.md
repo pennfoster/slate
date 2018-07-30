@@ -80,25 +80,24 @@ Penn Foster expects for the API token to be included in all API requests to the 
 You must replace <code>secretToken</code> with the token received from the authentication call.
 </aside>
 
-# Accounts
+# Organizations
 
-At Penn Foster all API calls will require your Account ID.  This ID will be supplied by the Penn Foster team.
-Accounts are in a 3 tier hierarchy:
+Organizations are in a 3 tier hierarchy:
 
-1. Account ID *(also referred to as Parent ID)*
+1. Organization ID *(also referred to as Parent ID)*
 2. Location ID
 3. Client ID
 
-Each Account ID can have 1 or many Location IDs.
+Each Organization ID can have 1 or many Location IDs.
 Each Location ID can have 1 or many Client IDs.
 
 
-## Get All Accounts
+## Get All Organizations
 
-> Example Get All Accounts Request:
+> Example Get All Organizations Request:
 
 ```javascript
-GET https://environment-url/api/v1/accounts/<account_id>
+GET https://environment-url/api/v1/organizations/<organization_id>
 
 // Request Headers
 Authorization: Bearer <token>
@@ -109,7 +108,7 @@ Content-type: application/json
 ```json
 
 {
-  "parent_id": 0,
+  "organization_id": 0,
   "type": "string",
   "name": "string",
   "status": "string",
@@ -178,18 +177,18 @@ Content-type: application/json
 }
 ```
 
-Get All Account Information.
+Get All Organization Information.
 
 ### HTTP Request
 
-`GET /accounts/{account_id}`
+`GET /organizations/{organization_id}`
 
-## Get Accounts by Location
+## Get Organizations by Location
 
-> Example Get Accounts info by Location Request:
+> Example Get Organizations info by Location Request:
 
 ```javascript
-GET https://environment-url/api/v1/accounts/{account_id}/location/{location_id}
+GET https://environment-url/api/v1/organizations/{organization_id}/location/{location_id}
 
 // Request Headers
 Authorization: Bearer <token>
@@ -200,7 +199,7 @@ Content-type: application/json
 ```json
 
 {
-  "parent_id": 0,
+  "organization_id": 0,
   "type": "string",
   "name": "string",
   "status": "string",
@@ -269,18 +268,18 @@ Content-type: application/json
 }
 ```
 
-Get Accounts information by a specific Location ID.
+Get Organizations information by a specific Location ID.
 
 ### HTTP Request
 
-`GET /accounts/{account_id}/location/{location_id}`
+`GET /organizations/{organization_id}/location/{location_id}`
 
-## Get Accounts by Client
+## Get Organizations by Client
 
-> Example Get Accounts info by Location and Client Request:
+> Example Get Organizations info by Location and Client Request:
 
 ```javascript
-GET https://environment-url/api/v1/accounts/{account_id}/location/{location_id}/client/{client_id}
+GET https://environment-url/api/v1/organizations/{organization_id}/location/{location_id}/client/{client_id}
 
 // Request Headers
 Authorization: Bearer <token>
@@ -291,7 +290,7 @@ Content-type: application/json
 ```json
 
 {
-  "parent_id": 0,
+  "organization_id": 0,
   "type": "string",
   "name": "string",
   "status": "string",
@@ -360,11 +359,11 @@ Content-type: application/json
 }
 ```
 
-Get Accounts information by a specific Location and Client ID.
+Get Organizations information by a specific Location and Client ID.
 
 ### HTTP Request
 
-`GET /accounts/{account_id}/location/{location_id}/client/{client_id}`
+`GET /organizations/{organization_id}/location/{location_id}/client/{client_id}`
 
 # Leads
 
