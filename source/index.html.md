@@ -586,12 +586,12 @@ enrollment_status | X = Success. E = Error.
 errors | Error with particular object. See [Errors](#penn-foster-system-codes).
 links | Not currently populated.
 
-## Get Learner Information
+## Get Learners by Organization
 
 > Example Get Learner Info Request:
 
 ```javascript
-GET https://environment-url/api/v1/learners/{student_id}
+GET https://environment-url/api/v1/learners?organization_id=141982&rows_per_page=10&page_number=1
 
 // Request Headers
 Authorization: Bearer <token>
@@ -600,6 +600,54 @@ Content-type: application/json
 >Response (JSON)
 
 ```json
+
+{
+    "page_number": 1,
+    "page_count": 75,
+    "record_count": 746,
+    "results": {
+        "52975707": {
+            "resource_id": 68284,
+            "organization_id": 141982,
+            "location_id": 244648,
+            "client_id": 329209,
+            "student_id": "52975707",
+            "alternate_id": "ThisCouldBeAnyTypeOfData",
+            "alternate_location_id": "ThisCouldBeAnyTypeOfData",
+            "first_name": "First",
+            "last_name": "Last",
+            "email_address": "test@test.com",
+            "program_id": "TES01105",
+            "program_name": "SOFT SKILLS",
+            "active_status": "Active", //Active, Inactive, Graduated, Canceled
+            "date_enrolled": "07/18/2018",
+            "date_last_active": "07/18/2018",
+            "date_completed": "07/18/2018",
+            "expiration_date": "07/18/2019"
+        },
+        "52977876": {
+            "resource_id": 68450,
+            "organization_id": 141982,
+            "location_id": 244648,
+            "client_id": 329209,
+            "student_id": "52977876",
+            "alternate_id": "",
+            "alternate_location_id": "",
+            "first_name": "Johnny",
+            "last_name": "Twosheds",
+            "email_address": "test@test.com",
+            "program_id": "TES01105",
+            "program_name": "SOFT SKILLS",
+            "active_status": "Active", //Active, Inactive, Graduated, Canceled
+            "date_enrolled": "07/18/2018",
+            "date_last_active": "07/18/2018",
+            "date_completed": "07/18/2018",
+            "expiration_date": "07/18/2019"
+        },
+        ...
+  }
+}
+
 {
     "organization_id": 146151,
     "location_id": 252248,
@@ -621,11 +669,24 @@ Content-type: application/json
 }
 ```
 
-Get a specific Learner's information.
+Get all learners by `Organization ID`.
 
 ### HTTP Request
 
-`GET /learners/{student_id}`
+`GET /learners?organization_id=123456`
+
+### URL Parameters
+
+
+Parameter | Size | Required | Description
+--------- | ---- | -------- | -----------
+organization_id | 6 | Yes | Unique ID for an organization.
+location_id | 6 | No | Unique ID for location under an organization.
+alternate_location_id | 6 | No | 3rd party unique ID for location under an organization.
+client_id | 6 | No | Unique ID for client under an organization/location.
+alternate_client_id | 6 | No | 3rd party unique ID for client under an organization/location.
+page_number | 5 | No | If using pagination specify the page number you want returned.
+rows_per_page | 5 | No | If using pagination specify the number of records per page.
 
 ## Cancel Learners
 
