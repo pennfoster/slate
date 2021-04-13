@@ -18,6 +18,8 @@ search: true
 # Introduction
 Penn Foster's (PF) integration APIs allow partners and clients to interact with our systems and services through a set of REST endpoints (resources) which provide services like learner enrollment, learner progression, and organization information.
 
+Most current API Version is v3 
+
 ## Environments
 The APIs are hosted in 3 different environments as listed below:
 
